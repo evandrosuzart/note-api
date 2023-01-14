@@ -10,6 +10,15 @@ module.exports = {
   },
 
   async store(req, res) {
+    /*  #swagger.parameters['note_scheme'] = {
+                in: 'body',
+                description: 'Informações da nova nota',
+                schema: {
+                    title: '',
+                    description: ''
+                }
+        } 
+    */
     const note = await Note.create(req.body);
     return res.json(note);
   },
@@ -19,6 +28,18 @@ module.exports = {
   },
 
   async update(req, res) {
+    /*  #swagger.parameters['note_scheme'] = {
+                    in: 'body',
+                    description: 'Novas informações da rota',
+                    schema: {
+                        _id: '',
+                        title: '',
+                        description: '', 
+                        createdAt: ''
+                    }
+            } 
+        */
+
     const note = await Note.findByIdAndUpdate(req.params.id, req.body, {
       new: true
     });
@@ -30,3 +51,4 @@ module.exports = {
     return res.send();
   }
 };
+

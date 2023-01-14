@@ -2,17 +2,22 @@ const express = require("express");
 const mongoose = require("mongoose");
 const requireDir = require("require-dir");
 const cors = require('cors')
-const app = express();
-app.use(cors())
-app.use(express.json())
-mongoose.connect("mongodb://localhost:27017/notes", {
-  useNewUrlParser: true
-});
 
+
+const env = require('./enviroment')
+
+
+mongoose.set('strictQuery', false);
+mongoose.connect(env.URL, {
+  useNewUrlParser: true,
+});
 requireDir("./src/models");
 
-//const Product = mongoose.model("Product");
+const app = express();
+app.use(cors(cors.CorsOptions))
+app.use(express.json())
 
-app.use('/api', require('./src/routes/Routes'))
+app
+  .use('/api', require('./src/routes/Routes'))
+  .listen(3001)
 
-app.listen(3001);
